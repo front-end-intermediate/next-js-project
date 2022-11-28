@@ -12,9 +12,7 @@
 
 <!-- Note: environment variables are read only on start up. When changing env files restart the app if running. -->
 
-Note: running `start` in a NextJS app runs from the production build folder. Use:
-
-`npm run dev`
+Note: running `start` in a NextJS app runs from the production build folder. Use `npm run dev` instead.
 
 Things to note:
 
