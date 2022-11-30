@@ -1,6 +1,8 @@
+import React from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../components/layout";
+import PokemonContext from "../src/PokemonContext";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -11,11 +13,26 @@ const darkTheme = createTheme({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [pokemon, pokemonSet] = React.useState(null);
+
+  React.useEffect(() => {
+    fetch("/pokemon.json")
+      .then((resp) => resp.json())
+      .then((data) => pokemonSet(data));
+  }, []);
+
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
+    <PokemonContext.Provider
+      value={{
+        pokemon,
+        pokemonSet,
+      }}
+    >
+      <ThemeProvider theme={darkTheme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+    </PokemonContext.Provider>
   );
 }
