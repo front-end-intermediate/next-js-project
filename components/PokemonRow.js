@@ -3,8 +3,13 @@ import Link from "next/link";
 
 export const PokemonRow = ({ pokemon, onClick }) => (
   <tr key={pokemon.id}>
+    {/* <td>
+      <Link href={`/pokemon/${pokemon.id}`}>{pokemon.name.english}</Link>
+    </td> */}
     <td>
       <Link href={`/pokemon/${pokemon.id}`}>{pokemon.name.english}</Link>
+      <br />
+      <Link href={`/ssr/${pokemon.id}`}>SSR {pokemon.name.english}</Link>
     </td>
     <td>{pokemon.type.join(", ")}</td>
     {/* NEW table cell */}

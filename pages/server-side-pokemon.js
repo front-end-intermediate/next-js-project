@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { PokemonRow } from "../components/PokemonRow";
-import PokemonContext from "../src/PokemonContext";
+// import PokemonContext from "../src/PokemonContext";
 import { PokemonFilter } from "../components/PokemonFilter";
 
 const PokemonInfo = ({ name: { english }, base }) => (
@@ -34,8 +34,19 @@ const TwoColumnLayout = styled.div`
   grid-column-gap: 1rem;
 `;
 
-export default function Pokemon() {
-  const { pokemon, filter } = React.useContext(PokemonContext);
+export async function getServerSideProps() {
+  const response = await fetch("http://localhost:3000/pokemon.json");
+  const pokemon = await response.json();
+  return {
+    props: {
+      pokemon,
+    },
+  };
+}
+
+export default function Pokemon({ pokemon }) {
+  // const { pokemon, filter } = React.useContext(PokemonContext);
+  const [filter, filterSet] = React.useState("");
   const [selectedPokemon, selectedPokemonSet] = React.useState(null);
 
   if (!pokemon) {
@@ -47,8 +58,8 @@ export default function Pokemon() {
       <Title>Pokemon Search</Title>
       <TwoColumnLayout>
         <div>
-          <PokemonFilter />
-
+          {/* <PokemonFilter /> */}
+          <PokemonFilter filter={filter} filterSet={filterSet} />
           <table width="100%">
             <tbody>
               {pokemon
