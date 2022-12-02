@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useContext } from "react";
-import PokemonContext from "../../src/PokemonContext";
+// import { useContext } from "react";
+// import PokemonContext from "../../src/PokemonContext";
 import styled from "@emotion/styled";
 
 import {
@@ -22,11 +22,34 @@ const TypeHeader = styled.span`
   font-weight: bold;
 `;
 
-export default function SinglePokemon() {
-  const { pokemon } = useContext(PokemonContext);
+export const getStaticPaths = async () => {
+  const pokemon = require("../../src/pokemon.json");
+  const paths = pokemon.map((p) => ({
+    params: {
+      id: p.id.toString(),
+    },
+  }));
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async (context) => {
+  const allPokemon = require("../../src/pokemon.json");
+  const currpokemon = allPokemon.find(
+    (p) => p.id === parseInt(context.params.id)
+  );
+  return {
+    props: { currpokemon },
+  };
+};
+
+export default function SinglePokemon({ currpokemon }) {
+  // const { pokemon } = useContext(PokemonContext);
   const router = useRouter();
 
-  const currpokemon = pokemon?.find((p) => p.id === parseInt(router.query.id));
+  // const currpokemon = pokemon?.find((p) => p.id === parseInt(router.query.id));
 
   return (
     <PageContainer>
