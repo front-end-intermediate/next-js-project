@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-// import { TextField } from "@mui/material";
 import styled from "@emotion/styled";
 import { PokemonRow } from "../components/PokemonRow";
 import PokemonContext from "../src/PokemonContext";
@@ -36,31 +35,14 @@ const TwoColumnLayout = styled.div`
 `;
 
 export default function Pokemon() {
-  const [filter, filterSet] = React.useState("");
-  const { pokemon, pokemonSet } = React.useContext(PokemonContext);
+  const { pokemon, filter } = React.useContext(PokemonContext);
   const [selectedPokemon, selectedPokemonSet] = React.useState(null);
-
-  // React.useEffect(() => {
-  //   fetch("/pokemon.json")
-  //     .then((resp) => resp.json())
-  //     .then((data) => pokemonSet(data));
-  // }, []);
 
   if (!pokemon) {
     return <div>Loading data...</div>;
   }
 
   return (
-    // <PokemonContext.Provider
-    //   value={{
-    //     filter,
-    //     pokemon,
-    //     filterSet,
-    //     pokemonSet,
-    //     selectedPokemon,
-    //     selectedPokemonSet,
-    //   }}
-    // >
     <PageContainer>
       <Title>Pokemon Search</Title>
       <TwoColumnLayout>
@@ -89,6 +71,5 @@ export default function Pokemon() {
         {selectedPokemon && <PokemonInfo {...selectedPokemon} />}
       </TwoColumnLayout>
     </PageContainer>
-    // </PokemonContext.Provider>
   );
 }

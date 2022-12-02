@@ -14,6 +14,7 @@ const darkTheme = createTheme({
 
 export default function App({ Component, pageProps }: AppProps) {
   const [pokemon, pokemonSet] = React.useState(null);
+  const [filter, filterSet] = React.useState("");
 
   React.useEffect(() => {
     fetch("/pokemon.json")
@@ -26,6 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
       value={{
         pokemon,
         pokemonSet,
+        filter,
+        filterSet,
       }}
     >
       <ThemeProvider theme={darkTheme}>
